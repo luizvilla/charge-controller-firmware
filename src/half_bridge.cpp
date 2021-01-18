@@ -12,6 +12,10 @@
 
 #include "mcu.h"
 
+#ifdef CONFIG_SOC_SERIES_STM32F3X
+#include "hrtim.h"
+#endif
+
 #ifndef UNIT_TEST
 #include <soc.h>
 #include <pinmux/stm32/pinmux_stm32.h>
@@ -23,7 +27,15 @@
 
 static uint16_t tim_ccr_min;        // capture/compare register min/max
 static uint16_t tim_ccr_max;
+#ifndef CONFIG_SOC_SERIES_STM32F3X
 static uint16_t tim_dt_clocks = 0;
+#else
+static hrtim_t hrtim = 0;
+static uint16_t dead_time_ns = 0;
+static uint16_t hrtim_period = 0;
+static uint16_t hrtim_cmp = 0;
+static bool hrtim_out_enabled = 0;
+#endif
 
 static uint16_t clamp_ccr(uint16_t ccr_target)
 {
@@ -41,8 +53,12 @@ static uint16_t clamp_ccr(uint16_t ccr_target)
 
 #ifndef UNIT_TEST
 
+#ifndef CONFIG_SOC_SERIES_STM32F3X
 // Get address of used timer from board dts
-#define PWM_TIMER_ADDR DT_REG_ADDR(DT_PHANDLE(DT_PATH(dcdc), timer))
+#define PWM_TIMER_ADDR      DT_REG_ADDR(DT_PHANDLE(DT_PATH(dcdc), timer))
+#else
+#define PWM_TIMER_ADDR      HRTIM1_BASE
+#endif
 
 #if PWM_TIMER_ADDR == TIM3_BASE
 
@@ -220,6 +236,102 @@ bool half_bridge_enabled()
     return TIM1->BDTR & TIM_BDTR_MOE;
 }
 
+#elif PWM_TIMER_ADDR == HRTIM1_BASE
+
+//~ static const struct soc_gpio_pinctrl tim_pinctrl[] = ST_STM32_DT_PINCTRL(timers1, 0);
+
+static void tim_init_registers(int freq_kHz)
+{
+    //~ stm32_dt_pinctrl_configure(tim_pinctrl, ARRAY_SIZE(tim_pinctrl), PWM_TIMER_ADDR);
+    /**
+     * HRTIM have a master timer and 5 slave timing units (tu) with two
+     * outputs each. Pinout of f334r8 and f072rb are the same. PWM_HS is
+     * on PA8 (TIMA OUT1) and PWM_LS is on PB13 (TIMC OUT2).
+     */
+    uint32_t freq = freq_kHz * 1000;
+    uint16_t dead_time_ns = 0;
+    hrtim_cen_t cen = (hrtim_cen_t)(TACEN | TCCEN);
+
+    /* Initializes the master timer */
+    hrtim_period = hrtim_init_master(hrtim, &freq);
+
+    /* Initializes TIMA, set the dead time */
+    hrtim_init_tu(hrtim, TIMA, &freq);
+    hrtim_pwm_dt(hrtim, TIMA, dead_time_ns);
+
+    /* Initializes TIMC, set the dead time */
+    hrtim_init_tu(hrtim, TIMC, &freq);
+    hrtim_pwm_dt(hrtim, TIMC, dead_time_ns);
+
+    /* Enable counters */
+    hrtim_cnt_en(hrtim, cen);
+
+    /* setup complementary outputs on PA8 and PB13 */
+    hrtim_set_cb_set(hrtim, TIMA, OUT1, MSTPER);
+    hrtim_rst_cb_set(hrtim, TIMA, OUT1, MSTCMP1);
+    hrtim_set_cb_set(hrtim, TIMC, OUT2, MSTCMP1);
+    hrtim_rst_cb_set(hrtim, TIMC, OUT2, MSTPER);
+
+    /* reset on master timer period event */
+    hrtim_rst_evt_en(hrtim, TIMA, RST_MSTPER);
+    hrtim_rst_evt_en(hrtim, TIMC, RST_MSTPER);
+}
+
+void half_bridge_start()
+{
+    if (hrtim_cmp >= tim_ccr_min && hrtim_cmp <= tim_ccr_max) {
+        /* As it is unusual to use outputs from two timing units for a
+         * single complementary output, we can not use hrtim_out_en()
+         * which is able to handle two outputs but unable to handle two
+         * timing units at once. */
+        uint32_t oenr;
+
+        oenr = (OUT1 << (TIMA * 2));
+        oenr |= (OUT2 << (TIMC * 2));
+
+        HRTIM1->sCommonRegs.OENR |= oenr;
+
+        hrtim_out_enabled = 1;
+    }
+}
+
+void half_bridge_stop()
+{
+    /* As it is unusual to use outputs from two timing units for a
+     * single complementary output, we can not use hrtim_out_dis()
+     * which is able to handle two outputs but unable to handle two
+     * timing units at once. */
+    uint32_t odisr;
+
+    odisr = (OUT1 << (TIMA * 2));
+    odisr |= (OUT2 << (TIMC * 2));
+
+    HRTIM1->sCommonRegs.ODISR |= odisr;
+
+    hrtim_out_enabled = 0;
+}
+
+uint16_t half_bridge_get_arr()
+{
+    return hrtim_period;
+}
+
+uint16_t half_bridge_get_ccr()
+{
+    return hrtim_cmp;
+}
+
+void half_bridge_set_ccr(uint16_t ccr)
+{
+    hrtim_cmp = clamp_ccr(ccr);
+    hrtim_cmp_set(hrtim, MSTR, MCMP1R, hrtim_cmp);
+}
+
+bool half_bridge_enabled()
+{
+    return hrtim_out_enabled;
+}
+
 #endif // TIM1
 
 #else // UNIT_TEST
@@ -269,6 +381,7 @@ bool half_bridge_enabled()
 
 #endif /* UNIT_TEST */
 
+#ifndef CONFIG_SOC_SERIES_STM32F3X
 static void tim_calculate_dt_clocks(int deadtime_ns)
 {
     // (clocks per ms * deadtime in ns) / 1000 == (clocks per ms * deadtime in ms)
@@ -276,10 +389,15 @@ static void tim_calculate_dt_clocks(int deadtime_ns)
     // be handled nicely, parentheses make this more explicit
     tim_dt_clocks = ((SystemCoreClock / (1000000)) * deadtime_ns) / 1000;
 }
+#endif
 
 void half_bridge_init(int freq_kHz, int deadtime_ns, float min_duty, float max_duty)
 {
+#ifndef CONFIG_SOC_SERIES_STM32F3X
     tim_calculate_dt_clocks(deadtime_ns);
+#else
+    dead_time_ns = deadtime_ns;
+#endif
 
     tim_init_registers(freq_kHz);
 
