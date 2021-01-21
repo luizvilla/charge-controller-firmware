@@ -148,6 +148,11 @@ static inline void _clk_init(hrtim_t hrtim)
     while(!(dev(hrtim)->sCommonRegs.ISR & HRTIM_IER_DLLRDY)) {}
 }
 
+static inline unsigned _msb(unsigned v)
+{
+    return 8 * sizeof(v) - __builtin_clz(v) - 1;
+}
+
 static inline uint32_t _period_ckpsc(hrtim_t hrtim, uint32_t freq,
                                         uint16_t *per, uint8_t *ckpsc)
 {
@@ -160,8 +165,7 @@ static inline uint32_t _period_ckpsc(hrtim_t hrtim, uint32_t freq,
 
     /* period = t_hrck / 2^ckpsc so bits over 15 position directly give
      * the needed prescaller */
-    *ckpsc = (bitarithm_msb(period) > 15)
-           ? bitarithm_msb(period) - 15 : 0;
+    *ckpsc = (_msb(period) > 15) ? _msb(period) - 15 : 0;
     period /= (1 << *ckpsc);
 
     /* From the f334 reference manual :
@@ -173,7 +177,7 @@ static inline uint32_t _period_ckpsc(hrtim_t hrtim, uint32_t freq,
      * • The maximum value must be less than or equal to 0xFFFF - 1
      * periods of the f HRTIM clock */
     uint16_t min_period = *ckpsc < 5 ? (96 >> *ckpsc) : 0x3;
-    uint16_t max_period = *ckpsc < 4 ? (0xFFFF - (32 >> *ckpsc)) : 0xFFFD;
+    uint16_t max_period = *ckpsc < 4 ? (0xffff - (32 >> *ckpsc)) : 0xfffd;
 
     /* Adjust prescaler and period if needed */
     if (period > (uint32_t)max_period) {

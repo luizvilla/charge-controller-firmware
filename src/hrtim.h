@@ -140,7 +140,6 @@ static const hrtim_conf_t hrtim_config[] = {
 /** @} */
 /* end periph_conf.h */
 
-#include "riot/bitarithm.h"
 
 #ifdef __cplusplus
 extern "C" {
