@@ -22,7 +22,8 @@
 #include "hrtim.h"
 
 
-/* BEGIN from RIOT/cpu/stm32/cpu_common.c */
+
+#ifndef PERIPH_CPU_H /* RIOT/cpu/stm32/cpu_common.c */
 void periph_clk_en(bus_t bus, uint32_t mask)
 {
     switch (bus) {
@@ -54,10 +55,9 @@ uint32_t periph_apb_clk(uint8_t bus)
 #endif
     return CLOCK_APB1;
 }
-/* END from RIOT/cpu/stm32/cpu_common.c */
+#endif /* RIOT/cpu/stm32/cpu_common.c */
 
-
-/* BEGIN from RIOT/cpu/stm32/periph/gpio_all.c */
+#ifndef PERIPH_GPIO_H /* RIOT/cpu/stm32/periph/gpio_all.c */
 static inline GPIO_TypeDef *_port(gpio_t pin)
 {
     return (GPIO_TypeDef *)(pin & ~(0x0f));
@@ -121,7 +121,8 @@ void gpio_init_af(gpio_t pin, gpio_af_t af)
     /* set pin to AF mode */
     set_mode(port, pin_num, 2);
 }
-/* END from RIOT/cpu/stm32/periph/gpio_all.c */
+#endif /* RIOT/cpu/stm32/periph/gpio_all.c */
+
 
 
 #include "assert.h"

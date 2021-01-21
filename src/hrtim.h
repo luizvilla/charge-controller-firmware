@@ -21,14 +21,23 @@
 #ifndef HRTIM_H
 #define HRTIM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 #include <limits.h>
 
-//~ #include "periph_cpu.h"
-#include "../zephyr/modules/hal/stm32/stm32cube/stm32f3xx/soc/stm32f334x8.h"
+#ifdef __ZEPHYR__
+#include <soc.h>
+#include <sys/util.h>
+#else /* RIOT */
+#include "periph_cpu.h"
+#endif
 
 
-/* BEGIN from RIOT/cpu/stm32/include/periph_cpu.h */
+
+#ifndef PERIPH_CPU_H /* RIOT/cpu/stm32/include/periph_cpu.h */
 typedef uint32_t gpio_t;
 
 typedef enum { // gpio_af_t
@@ -42,26 +51,21 @@ typedef enum { // gpio_af_t
 enum { PORT_A, PORT_B, PORT_C };
 
 typedef enum { // bus_t
-    APB1,           /**< APB1 bus */
-    APB2,           /**< APB2 bus */
-    AHB,            /**< AHB bus */
+    APB1,
+    APB2,
+    AHB,
 } bus_t;
 
 void periph_clk_en(bus_t bus, uint32_t mask);
 
 uint32_t periph_apb_clk(uint8_t bus);
-/* END from RIOT/cpu/stm32/include/periph_cpu.h */
-
-
-#define CLOCK_APB1  (CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC / CONFIG_CLOCK_STM32_APB1_PRESCALER)
-
-//~ #define ARRAY_SIZE(a)   (sizeof((a)) / sizeof((a)[0]))
-#include <sys/util.h>
 
 void gpio_init_af(gpio_t pin, gpio_af_t af);
 
+#define CLOCK_APB1  (CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC / CONFIG_CLOCK_STM32_APB1_PRESCALER)
+#endif /* RIOT/cpu/stm32/include/periph_cpu.h */
 
-/* BEGIN from RIOT/drivers/include/periph/gpio.h */
+#ifndef PERIPH_GPIO_H /* RIOT/drivers/include/periph/gpio.h */
 typedef unsigned int gpio_t;
 
 typedef enum { // gpio_mode_t
@@ -76,10 +80,10 @@ typedef enum { // gpio_mode_t
 } gpio_mode_t;
 
 int gpio_init(gpio_t pin, gpio_mode_t mode);
-/* END from RIOT/drivers/include/periph/gpio.h */
+#endif /* END from RIOT/drivers/include/periph/gpio.h */
 
 
-/* from periph_cpu.h */
+
 /**
  * @brief   HRTIM have 5 or 6 timing units
  */
@@ -109,10 +113,7 @@ typedef struct {
                                               * if not used */
     uint8_t bus;                    /**< APB bus */
 } hrtim_conf_t;
-/* end periph_cpu.h */
 
-
-/* from periph_conf.h */
 /**
  * @name    HRTIM configuration
  * @{
@@ -138,12 +139,6 @@ static const hrtim_conf_t hrtim_config[] = {
 
 #define HRTIM_NUMOF           ARRAY_SIZE(hrtim_config)
 /** @} */
-/* end periph_conf.h */
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /**
  * @brief   Default HRTIM access macro
