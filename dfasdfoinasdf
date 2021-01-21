@@ -1,0 +1,1834 @@
+[33mcommit 322a649e7c4e25cc5da68d91109314cf56bec797[m
+Author: luiz.villa <luiz.villa@laas.fr>
+Date:   Fri Jan 15 17:42:54 2021 +0100
+
+    First converter push
+    
+    A first push from Luiz into the OwnTech folder of the libreSolar.
+
+[33mcommit 6e7888a652e1f092fcb2e04d47be4e00aac403d5[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jan 15 17:20:18 2021 +0100
+
+    Temporary fix to make it compile
+
+[33mcommit bb2ed3dfdbc5ddb46b921a44e31b8b97aa81dff0[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jan 15 17:02:59 2021 +0100
+
+    Preliminary addition of owntech board
+
+[33mcommit c66c717bfe893fe0b5ec7d01e80da53455b169a4[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jan 1 16:16:58 2021 +0100
+
+    Use new ThingSet macros for CAN and ISO-TP fixed addressing
+
+[33mcommit 5e205478cf76c3ec937c9ffeb02012e60fb2d9f0[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Dec 23 21:15:14 2020 +0100
+
+    Fix CAN ISO-TP binding and CAN IDs
+    
+    For the recv_ctx, the rx and tx addresses were swapped. In addition to that,
+    the binding has to be released before sending.
+
+[33mcommit 29d0fd456f52bc5589725858980fd71fd974a16a[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Dec 22 21:50:11 2020 +0100
+
+    Enable CAN for MCUs with CAN-FD controller
+
+[33mcommit 754aab9abef1b0863efb998861ef60eaa5ffdbaf[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Dec 22 19:52:52 2020 +0100
+
+    Replace software watchdog with Zephyr task_wdt subsystem
+
+[33mcommit 3b30776b52a9a00a713c853cf11a98a5021d0e12[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sat Dec 12 00:06:08 2020 +0100
+
+    Move to pinmux based on devicetree
+
+[33mcommit 0f109297e4a071a2ef876339fcc573da7b6b06b8[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sat Dec 12 18:21:15 2020 +0100
+
+    Use generic LL headers
+
+[33mcommit e63a2db9e5ccfd0b0b820858291f562ae1efa338[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sat Dec 12 00:05:15 2020 +0100
+
+    Update west.yml and platformi.ini to track Zephyr v2.5
+    
+    The v2.5-branch is based on upstream master until Zephyr v2.5 is released.
+    
+    hal_stm32 needs to be overwritten with forked version to support new pinctrl
+    introduced in Zephyr 2.5.
+    
+    Also fixing some CAN issues because of API changes to make it compile.
+
+[33mcommit bcf54f6698f56dee8b7c31ef13b913fc7fb9d50d[m
+Author: Jordan Silverman <jordanjsilverman@gmail.com>
+Date:   Mon Sep 28 17:06:16 2020 +0100
+
+    Add latching pgood function to USB power output
+
+[33mcommit 3653b88d25280039df7a1dc26be84cfa62f23951[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Dec 14 10:40:58 2020 +0100
+
+    Remove ADC/DAC dts nodes now present in upstream Zephyr
+
+[33mcommit e5b42ace7298cd788234d675d7480f99d65c1706[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Dec 13 15:39:41 2020 +0100
+
+    Load: Use Zephyr PWM driver for charge pump
+
+[33mcommit 9ba540ec8c411a78b45e5a70f826b483009e529b[m
+Author: Daniel Fanache <daniel@connectedenergy.net>
+Date:   Tue Dec 1 12:42:06 2020 +0000
+
+    Configurable log levels for all the modules using Zephyr's logging.
+    
+    This allows us to enable e.g debug output for the CAN module with
+    CONFIG_CAN_LOG_LEVEL=4 without enabling the global
+    CONFIG_LOG_DEFAULT_LEVEL=4 and being swamped with debug output from
+    all of Zephyr's subsytems.
+
+[33mcommit 755e555611376820f1f39cf57b5b054d7dabc593[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Dec 1 15:11:24 2020 +0100
+
+    Fix DC/DC debug print variables
+
+[33mcommit a2ab1ebd4548b16b4f5d91a48d4c1f06eafe594b[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Nov 19 18:25:03 2020 +0100
+
+    PWM switch: Improve overvoltage protection
+    
+    In situations with full battery and sufficient solar panel power, the
+    battery could reach a high voltage directly after start of the PWM switch
+    and the control algorithm was not fast enough to limit the voltage (it
+    takes up to 18s to reach 5% duty cycle after starting at 95%).
+    
+    This commit increases the step size in the direction of reduced power
+    and introduces an overvoltage flag that results in restart with 5% duty
+    cycle if the previous stop was caused by an overvoltage event.
+
+[33mcommit 4f4bdc70ae905744c4c3f4d3b4c236db2218b23f[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Nov 19 17:32:49 2020 +0100
+
+    PWM switch: Clean up comments and add F suffixes
+
+[33mcommit 76ee3dc28ff0007ff973c9d782cada90117a9309[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Dec 11 22:19:23 2020 +0100
+
+    Doxygen: Disable preprocessing to include all classes
+
+[33mcommit 583924a9b99e727ae266c62ac1c993f693952711[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Nov 16 16:52:14 2020 +0100
+
+    Fix corrupted %f printf because of disabled heap
+    
+    newlib requires malloc if printf is used with %f. Since PR 28486, the heap
+    space in RAM is only reserved if explicitly used by the application
+    (independent of the value of CONFIG_HEAP_MEM_POOL_SIZE) in order to free
+    some stack memory. As printf calls malloc internally, this commit forces
+    Zephyr to build with heap support enabled.
+
+[33mcommit e5e27c10bc53a3c36c04b1e7ca30a0a1c9a8c422[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Nov 18 20:49:58 2020 +0100
+
+    Add MPPT 2420 HC link to Readme
+
+[33mcommit cb4d4ea1d94d078412f547959df52bebc1c55d71[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Nov 6 13:37:43 2020 +0100
+
+    LEDs: Use GPIO flags from dts properly
+    
+    The flags were always assumed to be ACTIVE_HIGH, which is now fixed.
+
+[33mcommit 47c1614ed0f6eae8e6b53c59226d0ff8b7c07cb6[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Sep 8 19:09:02 2020 +0200
+
+    Add MPPT 2420 HC board
+
+[33mcommit 5c3e2279283a2a4d877500056f871d33aa873d98[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Nov 9 17:39:37 2020 +0100
+
+    Add west.yml to use native Zephyr build system properly
+
+[33mcommit 3d9c4589cdb476ca97b1ec0395cd97f3d6bafe27[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Nov 9 07:53:35 2020 +0100
+
+    Upgrade to Zephyr 2.4
+    
+    - Make all struct device * constant
+    - Add additional argument to PWM nodes in devicetree
+    - Track customized LibreSolar/zephyr branch in platformio
+    - Update OLED submodule
+
+[33mcommit 62d28d9e5ef4575c660f9a85a9f63d132b6ef62b[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Nov 4 15:03:49 2020 +0100
+
+    Remove unneeded helper.cpp
+
+[33mcommit b63cdaa06d09f99f18877ae5924ba0e132c2e11c[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Nov 4 14:02:55 2020 +0100
+
+    DC/DC: Use high/low DcBus instead of PowerPort for control
+    
+    This makes more sense because the DC/DC converter actually connects two
+    DcBuses and does not need separate PowerPorts. Also makes the code look
+    more clean as variable access like dcdc.hvs->bus->voltage is avoided.
+    
+    The DcBus pointers in the Dcdc are now called hvb and lvb for high-
+    voltage side bus and low-voltage side bus.
+
+[33mcommit 0756341b29b41bde1a799bcbb873f498aa2571eb[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Nov 4 08:10:51 2020 +0100
+
+    Rename src/sink_voltage_bound to _intercept
+    
+    These variables define the voltage at zero current, which is the y axis
+    intercept of the droop curve (voltage vs. current).
+    As they do not always specifiy minimum or maximum boundary depending on
+    the sign of the droop resistance, intercept is a more suitable name.
+
+[33mcommit 7cd89bc04a56da99ca8c1eec49a4b1bdbb61905d[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Nov 2 11:07:20 2020 +0100
+
+    PWM switch: Fix start voltage check
+    
+    Previous statement didn't consider the series multiplier in case of 24V
+    battery.
+
+[33mcommit 1a29aa1a6eda4fced3d7b8289bef6cdbe72e9d88[m
+Author: Jordan Silverman <jordanjsilverman@gmail.com>
+Date:   Thu Oct 29 14:52:54 2020 +0000
+
+    Load NVM settings after data_nodes_init
+
+[33mcommit 1e64c253acdc5d8ae8a97622f08f1d2a5b80d6ad[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Oct 27 17:29:05 2020 +0100
+
+    DAQ: Fix LV terminal current for DC/DC + PWM
+    
+    Current calculation was wrong if both DC/DC and PWM ports are available
+    on the same device.
+
+[33mcommit 1e71ed043e3e9c1e25629c629e2ce0ccffc0b5f3[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Oct 26 15:23:04 2020 +0100
+
+    DC/DC: Fix ls_voltage_max setting
+
+[33mcommit 42759947f8bd33aae0742018a5f2cc090f87f6bf[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Oct 26 15:22:42 2020 +0100
+
+    DAQ: Add high-side overvoltage alert limit
+    
+    Also rename the functions which set the alert limits to set_xx_limit
+    instead of set_xx_alert.
+
+[33mcommit c6709f8f00c7273db3634121702b90f019fe7c18[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Oct 19 15:22:51 2020 +0200
+
+    Rename (Dcdc|PwmSwitch)::emergency_stop to stop
+    
+    The stop functions can be used in a generic way, not only in an emergency
+    situation. The name was misleading.
+
+[33mcommit 75e29692740b68662514abdb2379d50b9c1278c2[m
+Author: Jordan Silverman <jordanjsilverman@gmail.com>
+Date:   Mon Oct 26 13:34:51 2020 +0000
+
+    Update thingset lib commit
+
+[33mcommit 213e2e30b66cee711f8e8f65899057bf28b074ac[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Oct 15 16:00:20 2020 +0200
+
+    Increase control thread priority to -1
+    
+    Set to lowest cooperative priority so that it cannot be interrupted by main
+    or other threads (only by ISRs).
+
+[33mcommit b40a419e3e84a2e622afed6ea0c6624fb6dff2cd[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Oct 15 15:55:49 2020 +0200
+
+    Optimize timing of 1s loop in main.cpp
+    
+    Previously, the interval was not exactly 1s, which could have a negative
+    impact on energy calculations.
+    
+    This commit also moves the 1s interval tasks from control loop to the main
+    loop to avoid duplicated loops running at 1s interval.
+
+[33mcommit 62338711bcd3acd124efbdd88b0d74c1e68f5c26[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Sep 29 14:16:30 2020 +0200
+
+    Fix ADC2 triggering for STM32G4 MCUs
+    
+    When switching to edge-aligned PWM, the ADC measurement was accidentally
+    triggered at the beginning of the switching cycle.
+    Fixing this using TIM1 OC6, triggering at falling edge.
+
+[33mcommit db9c9c5b1cd646b70d75660a297a847f3c596263[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Sep 29 09:57:43 2020 +0200
+
+    Rename DC/DC operation mode and control names
+    
+    New control states allow to specify the reason for derating more detailed,
+    also considering the input side.
+    
+    The operation mode is now also used as a return value for
+    check_start_conditions function to get rid of magic numbers.
+
+[33mcommit c38f1c83487185afde9312fb2c58684139720da9[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Sep 28 16:02:55 2020 +0200
+
+    Cleanup of DC/DC control function
+    
+    The check for high-side MOSFET shorts and startup inhibit are moved to
+    separate functions to keep the general control function more clean.
+    
+    Also declared check_start_conditions weak to allow custom overriding.
+
+[33mcommit a65bcfe3c2d30af96bbf4e2894e885c2b6f76ba2[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Oct 6 15:50:08 2020 +0200
+
+    DAQ: Fix VREF calculation for 16-bit left-aligned readings
+    
+    Calculation was still for previous 12-bit right-aligned ADC readings
+    and resulted in wrong calculation of MCU internal temperature.
+
+[33mcommit 06499a2409c45f0c496dfd05fd06b54e31e87136[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Oct 6 13:44:17 2020 +0200
+
+    PWM solar input: Fix voltage calculation offset in dts
+    
+    This offset had to be left-shifted by 4 since the DAQ calculations switched
+    to 16-bit resolution.
+
+[33mcommit bb39ff6236c56279ce20eb0cd4490b8de3ae6af5[m
+Author: Jordan Silverman <jordanjsilverman@gmail.com>
+Date:   Thu Sep 17 17:14:15 2020 +0100
+
+    Update data nodes
+
+[33mcommit 9d09f1431b224bba9e57f44127643522dfe76e94[m
+Author: Jordan Silverman <jordanjsilverman@gmail.com>
+Date:   Thu Sep 17 17:13:13 2020 +0100
+
+    Add grid energy counters
+
+[33mcommit ef9c8571ccb5095cc82730b00bd5b4e352ce007b[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Sep 17 15:53:49 2020 +0200
+
+    ADC filter time constant configurable per channel
+    
+    Add a filter-const prop to the adc_inputs devicetree binding and use it instead
+    of the global ADC_FILTER_CONST in daq.cpp.
+
+[33mcommit 4008a09f3b05eccad19fd3e49a0dc1be2895feb9[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Sep 4 18:33:31 2020 +0200
+
+    ADC: Use 16-bit raw values for calculations
+    
+    Using 16-bit for calculation allows to increase resolution by oversampling.
+    The ADC was already configured to use left-aligned 12-bit readings, which can
+    be treated the same as 16-bit native readings.
+
+[33mcommit 3bb4a86b5ceb66bdf73b5513169640807556085f[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Sep 1 14:39:21 2020 +0200
+
+    DAQ: Calculate current offset using raw reading
+    
+    Makes the calculation more efficient compared to floating point math
+
+[33mcommit 16c629ed865b410e146bc96a50b03390255c94a7[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Sep 17 13:14:56 2020 +0200
+
+    DC/DC: Use edge-aligned PWM mode with TIM1
+    
+    This increases the resolution of the PWM duty cycle of the DC/DC converter by a
+    factor of 2, which helps to set the ratio between input and output voltage for
+    the MPPT algorithm more precisely.
+    
+    Some restructuring of the half_bridge functions was necessary.
+
+[33mcommit 1356de230ff0b9938f3ab40fc8b49447f26159e3[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Sep 17 10:33:05 2020 +0200
+
+    Configure half_bridge PWM via board.dts and pinmux.c
+    
+    Removes some of the hard-coded configuration in half_bridge.cpp and moves it
+    to board configuration.
+    
+    The previous manual pinmux for the PWM output pins is now completely replaced
+    with Zephyr pinmux.
+
+[33mcommit 716fb367a83dc433e21d6a7cfaad274a4c3743fe[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Sep 16 15:47:30 2020 +0200
+
+    Update development model in Readme
+
+[33mcommit 073c04967aa776d7450b3ba15e9507e8153139ed[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Aug 13 18:48:34 2020 +0200
+
+    Restructure ADC filtering and improve explanations
+
+[33mcommit f55b236a56f5301696f6941b118e2ab3d7f6882b[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Aug 25 13:55:17 2020 +0200
+
+    Update MCU-specific defines and includes
+    
+    Distinguish properly between MCU series and actual MCUs. Constants in mcu.h
+    had to be changed to #defines to be useable from C code (not only C++).
+
+[33mcommit d274ca6980e37a8677dd300895bbd1d4be6bca40[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Aug 25 14:19:36 2020 +0200
+
+    Update PlatformIO ststm32 to 8.0.0
+    
+    Fixes Zephyr compile issues https://github.com/platformio/zephyr/issues/5
+
+[33mcommit 314075545a45ec09be0a792478e06192b60c89f7[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Aug 18 13:29:49 2020 +0200
+
+    Fix whitespace-check in Travis for PRs not to master
+
+[33mcommit 6be4e20f045e8ed65e03e52b6efdda4a0a000cf7[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Aug 17 18:22:26 2020 +0200
+
+    Make load OC and LVD recovery delay configurable
+
+[33mcommit ab63204adbd961b6656af7a27971d2faf1969f30[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Aug 17 16:49:46 2020 +0200
+
+    Make battery configurable via Kconfig (fix #94)
+    
+    Also adds crazy IS_ENABLED macro to unit tests.
+
+[33mcommit 5b024dcd603e1a78c6df59ea5b2593f33fe4d0e5[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Aug 18 18:50:20 2020 +0200
+
+    Increase stack space for ts.process in serial.cpp
+    
+    Depending on the amount of data nodes, calling ?rec caused a stack overflow.
+    Larger stack memory solves the issue, for further improvement see also #103.
+
+[33mcommit b1109187976fc726231ec8340e259c26ff79c265[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Aug 18 07:58:00 2020 +0200
+
+    Select serial port for ThingSet via Kconfig
+
+[33mcommit 5e5f2c6680a6aa6759577a761b331f0d024cf4de[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Aug 18 07:56:47 2020 +0200
+
+    mppt_1210_rc: Use USART1 as debug serial
+
+[33mcommit c78c5431a4d93ad417ccba0e1eaee5b9ffc68ed9[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Aug 17 20:12:25 2020 +0200
+
+    Enable load short circuit comp for PWM 2420 LUS
+
+[33mcommit 3aada5dbccc7f42aa8d8f14e59b4ec6f8753bd11[m
+Author: azeemshatp <azeemsha.tp@scene.community>
+Date:   Thu Aug 6 17:19:30 2020 +0100
+
+    Fix trailing whitespace check in Windows and Linux
+    
+    Previous check in check.bat considered only uncommitted changes.
+
+[33mcommit d2e833716a5ee10dd2bfe0869f63b95d053967f6[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Aug 17 11:48:35 2020 +0200
+
+    Add Grid_A to ThingSet data nodes
+
+[33mcommit c8fa15a86082c4a0db531a51583c0b16cbeccf60[m
+Author: Daniel Fanache <daniel@connectedenergy.net>
+Date:   Tue Aug 4 15:15:58 2020 +0100
+
+    Remove executable bit for board definition files.
+
+[33mcommit e427b4535250c7882a16c44e957ac9a6975e6049[m
+Author: Daniel Fanache <daniel@connectedenergy.net>
+Date:   Mon Aug 3 17:39:56 2020 +0100
+
+    Use DT macros instead of Kconfig for board pinmux
+    
+    Stops using CONFIG_device_x style configuration items and checks the
+    devicetree to determine if the nodes are enabled.
+    
+    Fixes UEXT serial port not working.
+
+[33mcommit ee5846323fafd38e48ed8389a4df40ad5229be1f[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Aug 4 15:47:15 2020 +0200
+
+    Fix STM32G4 ADC settings to improve accuracy
+    
+    - Wait for the reference voltage to stabilize (thanks to yasen)
+    - Increase internal regulator stabilization period prior to calibration
+
+[33mcommit 176af4188f4e30af32fd2ebdc8ff97595c516ac9[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jul 31 14:37:50 2020 +0200
+
+    Increase serial watchdog timeout
+    
+    This prevents the watchdog from kicking in while configuration is stored to
+    slow EEPROM integrated in STM32L072 MCUs.
+
+[33mcommit 445359c3b5a68fcda25ce4077bba21a6952c99ca[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Aug 3 14:51:54 2020 +0200
+
+    Make CAN publication frequency more accurate
+    
+    Using K_TIMEOUT_ABS_MS for k_sleep calculate exact 1s interval.
+
+[33mcommit 8f96343cf1e36be62a7b797e03100ee55da0b6bc[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Jul 27 14:51:06 2020 +0200
+
+    Add support for Kconfig in src/custom
+    
+    Also fixes data_nodes_custom.cpp inclusion based on Kconfig.
+
+[33mcommit bbd1312fe543341a40b71a58f56ceacbe4206cd5[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jul 24 08:34:45 2020 +0200
+
+    Relocate and clean up application Kconfig structure
+
+[33mcommit dc85b46477dbd1f2d5b61b6e9f4d1a6dd9403375[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Jul 23 19:21:14 2020 +0200
+
+    Remove unused ExtInterface and ExtMgr
+
+[33mcommit 01650917fddfe1e5e5202680b8ce227520c17be2[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Jul 23 19:18:24 2020 +0200
+
+    Move ThingSet serial to dedicated thread
+
+[33mcommit 79ba9006e77b08112b28649002e340bafb5737a5[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Jul 23 18:31:52 2020 +0200
+
+    Move OLED display to dedicated thread
+
+[33mcommit 5e213fdfb1ba45e57a16ae9069cbcc9ca67334ce[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Jul 23 14:27:30 2020 +0200
+
+    Generate COMMIT_HASH define via CMake
+    
+    Previously the commit hash was generated with a python script which was only
+    called by PlatformIO and caused issues when using Zephyr SDK directly.
+
+[33mcommit c2ef955a636aa9b9bc1094303f0e853d29755286[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Jul 23 11:26:55 2020 +0200
+
+    Replace custom print_* with Zephyr LOG_*
+
+[33mcommit 8e06357a7db9bc8df507f360b2b90bdcf3728162[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Jul 21 15:24:10 2020 +0200
+
+    Make CAN node ID configurable
+
+[33mcommit 70baedf95d8db0acb2c27c61cfa8d4fa2658040a[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Jul 21 13:13:38 2020 +0200
+
+    CAN: Separate thread for pub messages
+
+[33mcommit 3b486f319305d1a32d62c5bdb2b38fc41b29b6f6[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Jul 21 12:45:54 2020 +0200
+
+    Restructure SW watchdog and fix bug for >3 channels
+    
+    The feed function considered max. number of channels and not actual number
+    of registered channels, which resulted in undefined behavior if not all
+    channels were used.
+    
+    Also introducing more simple API to hide the software implementation.
+
+[33mcommit ed374e8e99db10a0a349a44e3305f644d9b735b9[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Jul 20 15:39:28 2020 +0200
+
+    Remove CAN msg queue and update ThingSet lib
+
+[33mcommit dc4576c8b48602cc47101bda55157857b48b4906[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Jul 20 08:42:54 2020 +0200
+
+    Remove all board.h files
+    
+    Final updates to devicetree files (adding temperature sensor information) make
+    board.h files obsolete.
+
+[33mcommit 27cdcb3bf6c86d9e643934dfe8df7c48c99364f5[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Jul 19 16:36:00 2020 +0200
+
+    LED setup via devicetree
+    
+    - New charlieplexing-leds binding
+    - board.dts files updated
+    - Pin and LED setup removed from pinmux.c and board.h files
+
+[33mcommit a584904470229f804d2a14e5ff97210396a25995[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Jul 8 13:01:41 2020 +0200
+
+    Switch to new DT_ macros
+
+[33mcommit b8fe6d7023e02936e37987d568986d5efca7b114[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Jul 8 10:30:53 2020 +0200
+
+    Fix some static code analysis warnings
+
+[33mcommit 3012501358aa22ca269f280761b03d259a43a11d[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Jul 7 17:12:44 2020 +0200
+
+    Switch to Zephyr 2.3 and update pio check
+
+[33mcommit 6316dcd57f9f320e9dc02d0484197b73dd36c61c[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Jun 30 10:35:10 2020 +0200
+
+    Add DC/DC HV side output enable switch
+
+[33mcommit 7dfcac4037a788d029e144a24646e0902287113c[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Jun 30 13:07:40 2020 +0200
+
+    Add ADC reading to/from voltage conversions
+
+[33mcommit 7af7d1c4ee70d90bcaa9a10d0e829e8458a07afa[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Jun 29 09:17:40 2020 +0200
+
+    Add CAN ISO-TP support
+
+[33mcommit 3fcd27cdbaf6ff5c5890ad4cbcdc0444581d9fb6[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Jun 28 08:36:14 2020 +0200
+
+    Use separate CMakeLists.txt per directory
+
+[33mcommit 8a28d8bc22292552218f6c8611a7103226459fa8[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Jun 28 08:17:55 2020 +0200
+
+    Remove unused bootloader support
+
+[33mcommit 705abbed6b0229a8dad559a38551db82a3e69291[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Jun 28 08:14:12 2020 +0200
+
+    Remove broken ESP32 modem driver
+    
+    This driver was only compatible with mbed and didn't work reliably. Zephyr
+    has an in-built ESP modem driver already.
+
+[33mcommit 2a3e50f6caee7c548afa1b3927e889acdd94a998[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jun 26 15:51:44 2020 +0200
+
+    Add battery temp. sensor to MPPT 2420 RC
+
+[33mcommit a7f4ccaa91458fd33887653f59efc9a4ee618a02[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jun 26 15:40:10 2020 +0200
+
+    Add CAN support for MPPT 2420 RC board
+    
+    The CAN-FD driver is not yet in Zephyr master, so it is required to get
+    Zephyr PR 22832 to actually use CAN with this MCU.
+
+[33mcommit d283436747055b6a6d4864d2907ff9db4a18874d[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Jun 17 10:54:30 2020 +0200
+
+    Move ADC peripheral setup to devicetree
+    
+    Remove the ADC channel configuration from the board.h files and use new
+    DT macros to configure the ADC peripheral based on board.dts only.
+
+[33mcommit 1b6c56d25b8288730cdc14f510b3abf6e59a762d[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Jun 15 15:26:45 2020 +0200
+
+    Replace adc-gain DT binding with adc-inputs
+    
+    Preparation for cleanup of ADC driver.
+
+[33mcommit 3c9a6e49f1dd97848c826207f729c04b82d47b2b[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jun 26 14:36:36 2020 +0200
+
+    Fix not enabled UART_1 for some boards
+
+[33mcommit 1dc5cdd7ef45efe824f8db5390dae06f84644321[m
+Author: Rhushabh <rhushabhraghavendrarr@gmail.com>
+Date:   Thu Jun 18 11:42:16 2020 +0200
+
+    Software watchdog for multiple threads
+
+[33mcommit 54bc5eaee800f1dbb76cde470bd9c8e479db8110[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jun 12 17:24:36 2020 +0200
+
+    Add MPPT 2420 RC board
+
+[33mcommit 3185ff32a1dccb0863ac5a5cac3978568099b5f6[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jun 12 17:20:58 2020 +0200
+
+    Add support for Zephyr 2.3.0 (using west)
+    
+    Enable CONFIG_LEGACY_DEVICETREE_MACROS and fix removed Kconfig values
+    like UART_1 to support v2.2 and v2.3.
+
+[33mcommit a768f059a111b4eb13d658d81bac3f6c6ded360a[m
+Author: Jordan Silverman <jordanjsilverman@gmail.com>
+Date:   Tue Jun 16 16:36:20 2020 +0100
+
+    Stop energy counter when disabled
+
+[33mcommit 9f02287a030715d2f70a0e189ed54ee2be973d7c[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jun 5 16:14:09 2020 +0200
+
+    Add custom unit-test option
+
+[33mcommit fb3251b88a29dbc086c402918432bd5d77b83f1e[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jun 5 17:11:07 2020 +0200
+
+    Add HS MOSFET fail-safe protection Kconfig
+    
+    The function already existed since a while, but was accidentally not activated.
+    This is fixed by this commit.
+
+[33mcommit fc0276e72c534a9b5977b68d939e42aefb6f9a7b[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Jun 5 16:22:41 2020 +0200
+
+    Allow custom DC/DC control functions
+    
+    A Kconfig CUSTOM_DCDC_CONTROLLER is introduced to enable implementation of
+    more sophisticated control functions than the standard perturb and observe.
+    
+    A function dcdc_low_level_controller() must be implemented and is called
+    from the DMA interrupt after each new current sensor reading.
+    
+    The default Dcdc::control() function is defined __weak.
+
+[33mcommit 2875ea1519c7602a9173571c12914fefbb41bca7[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Jun 2 13:09:53 2020 +0200
+
+    Rename DC/DC control function responsible for MPPT
+
+[33mcommit 3eb70e9a01df6566df00bba8827271fc2dd421f3[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Jun 4 16:21:50 2020 +0200
+
+    Add test/zephyr.h to mock Zephyr functions/defines
+
+[33mcommit dfde83d8be9fb5dfb44466f77626e33b3e4ac760[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Jun 2 12:33:16 2020 +0200
+
+    Add CCR and ARR based functions to half_bridge
+
+[33mcommit b288ffdf35bc90d286feed48ec22f12e1a95ef14[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Jun 2 10:10:44 2020 +0200
+
+    Cleanup of half_bridge driver
+    
+    Variables are now named same as registers to avoid confusion between duty
+    cycle as a value between 0 and 1 or as the capture/compare register value.
+
+[33mcommit a6c0eecf200e68a272510fe209fb258e84fbee3f[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Jun 2 07:39:32 2020 +0200
+
+    Small datatype updates to reduce RAM footprint
+
+[33mcommit 7769e4063c418faafd5d2f98f8fbfaafcaaef3f1[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Jun 4 11:15:30 2020 +0200
+
+    Allow more generic firmware customization
+    
+    This commit adds a new Kconfig setting CONFIG_CUSTOMIZATION. If enabled, the
+    subdirectory src/custom is added to the build. It can contain an own
+    CMakeLists.txt file to add several different C/C++ files.
+    
+    Readme has been updated to explain also DTS overlays and custom prj.conf files.
+
+[33mcommit 0e5e2f89b1ef4d71edf4103fb13f968b65e47848[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Jun 4 11:13:33 2020 +0200
+
+    Remove outdated Kconfig options
+
+[33mcommit cfed3ed6e95e20c42101ab951660274a1cc1ee28[m
+Author: azeemshatp <azeemsha.tp@scene.community>
+Date:   Tue May 26 12:52:55 2020 +0100
+
+    Configure custom data nodes
+
+[33mcommit 81aefff168a2b7c62d3836ac43df70ccdb903733[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu May 21 10:08:14 2020 +0200
+
+    Fix load overvoltage control for 24V systems (#96)
+
+[33mcommit 882f2813332a326d2cebf0f6ac6f8f0cc0b3f8a6[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon May 11 14:08:03 2020 +0200
+
+    Fix undervoltage error flag reporting
+    
+    Load shedding should only trigger capacity calculation, but not set the
+    undervoltage flag. That flag is only set for voltage below absolute min.
+
+[33mcommit 1bd8734a2e2cbdd7eafb6a82ead53fe5863a4ddc[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon May 11 12:25:54 2020 +0200
+
+    Use K_MSEC macro in k_sleep calls
+    
+    This is required by Zephyr 2.3, otherwise getting compile error.
+
+[33mcommit 9a5004e81d72eb6cb8aec8f1b651f4eeeb803099[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon May 11 10:59:45 2020 +0200
+
+    Fix DC/DC start check for 24V batteries (#95)
+
+[33mcommit faf19ee9e0e1454c8ef2387930eb50bdcbbf9ac1[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu May 7 16:33:46 2020 +0200
+
+    Fix wrong voltage divider in MPPT 2420 HPX
+
+[33mcommit e1c7f97f639062f258ede8f712e878e11387c830[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu May 7 08:25:42 2020 +0200
+
+    Add support for devices without load output
+
+[33mcommit d292ad425a881bf5e16e934b62b95fc9c45f1ecb[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Apr 30 11:49:08 2020 +0200
+
+    Add PWM switch off inhibit
+
+[33mcommit 3d4da669553fa0d60a63a7b2891a290c3f935548[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Apr 24 17:54:59 2020 +0200
+
+    Generate DeviceID from hwinfo
+
+[33mcommit efc0bc8fdcf22d89d908b852eda856e12f002818[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Apr 24 12:34:31 2020 +0200
+
+    Update to ThingSet library v0.3
+
+[33mcommit 7da96abbe4d0a64aa52115f8a12727fce0c704f9[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Apr 22 15:51:05 2020 +0200
+
+    Fix Solar_V enable and use float for gain calc
+
+[33mcommit f2c063b29162245e37a437b4128ff4d715d38dfe[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Apr 10 15:51:10 2020 +0200
+
+    Lock PlatformIO to Zephyr v2.2.0
+
+[33mcommit 5e94d721174c61f53cc1cf632abbe9ee4c023743[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Apr 10 15:23:31 2020 +0200
+
+    Use LL for PWM switch driver to support STM32G4
+    
+    This adds support for PWM solar input of MPPT 2420 HPX. Also adds new
+    PwmSwitch::test() function.
+
+[33mcommit 40113706466f46fa55619455adb6056835603086[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Apr 10 15:12:34 2020 +0200
+
+    MPPT-2420-HPX: Use TIM8 for charge pump
+    
+    This commit implements the PWM driver manually using STM LL, as the Zephyr
+    driver doesn't work for "advanced" timers like TIM8.
+
+[33mcommit e76709f2af9edb416f0334e61bec7b62977f4cec[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Apr 10 10:38:29 2020 +0200
+
+    Enable load short circuit comparator
+    
+    The load driver had to be moved to a .c file to allow attaching interrupt
+    in Zephyr.
+
+[33mcommit 9f258b6e69f353f06804bcb80ced4d73423c8f55[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Apr 9 11:20:48 2020 +0200
+
+    Replace short STM32XXX defines with CONFIG_SOC_...
+
+[33mcommit c856b28082d88c58a68779c17ff3d2b07d3baeb9[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Apr 9 09:54:54 2020 +0200
+
+    Cleanup of comments in bat_charger.h
+
+[33mcommit 6f490df537edf4641fae4693d35289707cfaccd3[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Apr 9 09:44:20 2020 +0200
+
+    Small fix of data object units
+
+[33mcommit 9787397708232075c511347766f8cd344d55f873[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Apr 8 17:10:40 2020 +0200
+
+    Rename STM32L073 references to actually used STM32L072
+
+[33mcommit 8380b928df77cfe00c3ce2320d799a5c56172c65[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Apr 8 16:54:25 2020 +0200
+
+    Fix Solar_V data object for PWM CCs
+
+[33mcommit a412117b5b4af2710aaa437e6e797e18c872f881[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Apr 8 16:53:33 2020 +0200
+
+    New adc-gain devicetree binding
+
+[33mcommit 4a70293375312cbf447f6a9f1626fc4eb7acd365[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Apr 7 19:13:05 2020 +0200
+
+    Update peripheral pins in board.dts and pinmux.c
+
+[33mcommit 8dd576e40e56fab46a80a6d588a22603518a0a61[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Apr 6 17:33:31 2020 +0200
+
+    Configure PWM switch driver via DTS
+    
+    Driver now moved to separate .c file to allow ISR handling in Zephyr.
+
+[33mcommit ce7f63b888d9bcdb670d49133cb50bf9c31bbe6b[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Apr 6 11:56:04 2020 +0200
+
+    Introduce generic "outputs" DTS binding
+    
+    Replaces previous "switch" and "pwm-out" bindings and allows to reference
+    either gpio or pwm handle and specify maximum current.
+    
+    Also replacing CONFIG_HAS_LOAD and CONFIG_HAS_USB_PWR with DT_ variants.
+
+[33mcommit 90c1e7fcf5596af7e6db34928c62f4abaf8d05b3[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Mon Apr 6 06:54:35 2020 +0200
+
+    Replace Zephyr ADC driver with direct LL access
+    
+    Fixes IRQ conflict with COMP peripheral (#93)
+
+[33mcommit 2d3594d25418191c0a60e5bbd98fcc99447e4bf0[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Apr 5 19:24:51 2020 +0200
+
+    Add watchdog for each thread using Zephyr API
+
+[33mcommit 1252a1ffa1bc182be68d2ff07ecb84e7d117da14[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Apr 5 17:43:23 2020 +0200
+
+    Make default battery type configurable via Kconfig
+
+[33mcommit d2dd50fe99ddcd40acebf83e093c488fb00c34e6[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Apr 5 17:06:46 2020 +0200
+
+    Add ThingSet passwords to Kconfig
+
+[33mcommit 5523f9354484cf1b9e295a3ed8a4f4104e6db87e[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Apr 5 13:15:57 2020 +0200
+
+    Handle PCB versioning with DTS overlays
+    
+    This commit completely removes versions like _0v4 in board names
+    and adds DTS overlays to zephyr/ directory. These can be used to
+    compile for older board versions.
+    
+    Some additional configuration changes are handled in board.h file
+    using board version number from DT_CHARGE_CONTROLLER_PCB_VERSION_NUM.
+
+[33mcommit affaa9d8e8f436b35c5f1e4bb22975364e4bd36b[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Apr 5 13:15:57 2020 +0200
+
+    Move PCB type and version to DTS
+
+[33mcommit 4e6f6c7365798aef31fec43b272ccddbbbab63c8[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Apr 5 10:55:51 2020 +0200
+
+    Move thermal model parameters to DTS
+
+[33mcommit 38125f3da3eadd3533508ae5a0e53904269baaef[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sat Apr 4 17:31:52 2020 +0200
+
+    Remove redundant CONFIG_NUM_LED_PINS
+
+[33mcommit ab504e3dfa7c1c96112f63c03ef7b72334ed3b95[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sat Apr 4 14:04:42 2020 +0200
+
+    DC/DC and PWM switch configuration via DTS
+    
+    As these settings are clearly hardware-specific, configuration was
+    moved from Kconfig (hidden symbols) to DTS. New bindings added.
+
+[33mcommit 64b771cd42690878c3499359757ad3e02e75f958[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sat Apr 4 13:11:47 2020 +0200
+
+    daq: Separate current offset for DC/DC and PWM
+
+[33mcommit c25640b987333a05305d6f1554a662e3eee785e4[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Apr 3 16:32:27 2020 +0200
+
+    Fix blocking if CAN not connected to bus
+
+[33mcommit 9efa2f8f771a83378477a9c86c7a43eadb16bcb6[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Apr 3 16:26:42 2020 +0200
+
+    Use Zephyr EEPROM driver
+
+[33mcommit 2a71d02aebcb2c7042725f4955fe4295bddc5f4a[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Apr 3 07:11:43 2020 +0200
+
+    Move PCB and user config to board Kconfig
+    
+    Files in src/pcbs/xyz.h are moved to boards/xyz/board.h. User settings from
+    src/config.h are also configured via Kconfig, so the file is removed.
+
+[33mcommit 2d74a3a55432e65675103eff48b4bfd9e1c68f7e[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Apr 2 21:18:15 2020 +0200
+
+    Mbed support removed
+    
+    Rationale: The support for both Zephyr and Mbed made the code confusing,
+    especially because of many ifdefs.
+    
+    Zephyr RTOS is the future!
+
+[33mcommit 2c2e59c0725f2bdc5d0293f9ca515f6e01e43fbe[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Apr 2 12:31:19 2020 +0200
+
+    Synchronize ADC2 with PWM signal
+    
+    For boards with STM32G431, the ADC2 is used for fast current measurement,
+    synchronized with the half bridge switching PWM.
+    With this change, the ADC2 is triggered in the center of high-side
+    MOSFET ON signal using a second PWM output of TIM1.
+
+[33mcommit 91d4ec44243e08c39c9bc559be5502534652f398[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Mar 11 15:11:50 2020 +0100
+
+    Fix COMP and ADC interrupt conflict for STM32L0
+    
+    The STM32L0 uses the same interrupt for ADC and COMP, which creates
+    interference with the Zephyr ADC driver. Proper fix needed!
+
+[33mcommit 84f7a4afdd0abf6bf5be702f21c94a59bb3fdb83[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Mar 3 11:15:58 2020 +0100
+
+    STM32G431: Add VREF+ pin and fix ADC calibration
+    
+    - Output 2.048V to VREF+ pin is now used as reference for ADC and DAC.
+    - ADC calbration got stuck before. Explicitly disabling ADC fixed the issue.
+
+[33mcommit daf43fb9674bb1c630aeebd42e1e96699b58fd01[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Mar 1 12:23:06 2020 +0100
+
+    USB charging output control via LoadOutput class
+    
+    - Introduce new CONFIG_HAS_USB_PWR_OUTPUT
+    - Improve charger.discharge_control function
+    - Add battery empty flag
+
+[33mcommit 1a9c290485ec6cb1a9e3c690e0eef275711c2716[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sun Mar 1 09:48:31 2020 +0100
+
+    Charger.num_batteries moved to DcBus.series_multiplier
+    
+    The reason is that the voltage disconnect thresholds used in the load outputs
+    need to be multiplied with number of batteries aswell. As the DcBus class
+    should contain all voltage-relevant information, it is the right place for the
+    multiplier.
+
+[33mcommit 651f66616bd8c1baca1f194012d00e4e69bc16c6[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Sat Feb 29 13:39:34 2020 +0100
+
+    Add load info variable (combines state and error_flags)
+
+[33mcommit a20644f1459b528f9655df070f0254f7b3449a71[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Feb 28 14:34:32 2020 +0100
+
+    Update documentation (docs folder)
+    
+    Outdated information removed and a new firmware structure overview added.
+
+[33mcommit 0e918e6b2e0e4101709f7ed5925787963af1ba8c[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Feb 28 13:24:21 2020 +0100
+
+    Add pwm-out DTS binding and fix CONFIG_PWM
+    
+    The binding .yaml was forgotten in previous charge pump commit. CONFIG_PWM was
+    moved from prj.conf to board_defconfig as not all boards need the PWM driver.
+
+[33mcommit 7722f12a0cefc13c94db530ac21cfbe6a5707141[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Feb 26 19:35:23 2020 +0100
+
+    Add DAC current sensor ref for STM32G4 MCU
+
+[33mcommit 46630f88cb12dc4181f8bfe039225b3db6b4f472[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Feb 26 19:30:59 2020 +0100
+
+    Enable half bridge for STM32G4 MCU
+
+[33mcommit 83073140006a9aa62cae8baa1214a185a71c20c7[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Feb 26 18:22:16 2020 +0100
+
+    Fix MPPT 2420 HPX pinmux and dts for I2C support
+
+[33mcommit 2154a1cb72612ce70c181a5432678fa22c61ed70[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Feb 21 18:25:28 2020 +0100
+
+    Add charge-pump driver for HS load switch
+
+[33mcommit fa9d15e796d83a5c5944e8d6274ed8ab6a0dc8e7[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Fri Feb 21 16:36:11 2020 +0100
+
+    Separate load and USB out, improve state handling
+    
+    Identified issues:
+    - The load output and USB charging port shared the same state machine,
+      which did not allow to set different switch-off thresholds.
+    - Load error codes were global, so it was not possible to have multiple
+      load instances.
+    
+    This commit introduces load-specific error_flags, makes the LoadOutput
+    class inherit from PowerPort (to improve code readability), separates
+    the load driver better from higher level implementation and adds a
+    second LoadOutput object for the USB charging port.
+
+[33mcommit 3c0bc411643d88e60ed8d63145314daff3159ab3[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Thu Feb 20 10:39:21 2020 +0100
+
+    Add ADC2 channel configuration for STM32G4 board
+    
+    Some changes regarding DMA setup and data alignment were necessary to
+    store all values from ADC1 and ADC2 in the same adc_readings array.
+
+[33mcommit d40dafd8d97330eee5ca11d8b6cbc8d21e7a1a8b[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Feb 19 16:52:09 2020 +0100
+
+    Rename V_SOLAR/BAT pins to more generic V_HIGH/LOW
+
+[33mcommit 8539fa35572731f1cb6a8a48f7904743a2f6c33c[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Wed Feb 19 14:44:51 2020 +0100
+
+    MPPT 2420 HPX: Add reset after flashing
+
+[33mcommit 0c20545f88ae4ac0dd43f6340f727614ec1d6a9f[m
+Author: Martin Jäger <martin@libre.solar>
+Date:   Tue Feb 18 16:33:24 2020 +0100
+
+    Differentiate between src and sink droop res again
+    
+    Necessary for improved load disconnect switch behavior.
+
+[33mcommit 6af8e6d93db3ab531297d9091d0d5077f5661e9b[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sun Feb 16 12:09:35 2020 +0100
+
+    Improve load voltage limits setup and update
+
+[33mcommit cdb9183c118d6bcbabd0937a09a62b88e425b61e[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sun Feb 16 10:29:45 2020 +0100
+
+    Fix load overvoltage limit
+    
+    The setting is now based on LoadOutput menber overvoltage and not
+    on the bus voltage bounds, which are used for charging setpoint.
+
+[33mcommit 68e03362791395800aa50833cc82b1d88e620fd3[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sun Feb 16 10:16:30 2020 +0100
+
+    Add debounce counter for UV error detection
+    
+    This prevents switching off the load output due to short undervoltage
+    events during startup of pumps etc. when the battery is at low SOC.
+
+[33mcommit b717dea6d15c59c54b598c93cc5855a99835c748[m
+Author: azeemshatp <azeemsha.tp@scene.community>
+Date:   Mon Feb 17 16:53:18 2020 +0000
+
+    Implement ADC 1 & 2 using low level APIs
+    
+    ADC2 works for STM32G431RB processor using LL drivers.
+    Keep the changes in the MPPT 'boards' folder for possible future use with
+    zephyr drivers.
+
+[33mcommit 30968e471c37c8a296ee94a028fc95854bff108a[m
+Author: JordanSilverman <jordanjsilverman@gmail.com>
+Date:   Mon Feb 17 18:34:55 2020 +0000
+
+    Check incoming battery conf
+
+[33mcommit 08974169aba12b0621059a61fb1a932dd3ad64a9[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Feb 13 18:00:45 2020 +0100
+
+    Use new Zephyr 2.2 GPIO driver API features
+    
+    Enable and disable pins are now handled the same using _set function
+    instead of _write and using ACTIVE_HIGH/LOW setting in dts.
+
+[33mcommit c4d43729535650d7422925f7b0a6964affe983f8[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Feb 13 17:28:59 2020 +0100
+
+    Fix board files for Zephyr 2.2 compatibility
+    
+    Warning: These changes break compatibility with previous v2.1.
+
+[33mcommit 9b2162b12e5bf00a5413fcce4954f9ebe5516967[m
+Author: azeemshatp <azeemsha.tp@scene.community>
+Date:   Tue Feb 11 11:16:08 2020 +0000
+
+    Fix ADC-DMA support for STM32G431
+    
+    Added additional clock setting for DMA and enabled DMAMUX.
+
+[33mcommit 14249492a351e06e642f15a480012ee782a3c687[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Fri Feb 7 11:04:36 2020 +0100
+
+    Improve full charge detection and topping control
+    
+    The battery is only full if the topping voltage is still reached AND the
+    current is below cut-off threshold at the same time. This was not always
+    detected correctly with previous 2s target voltage monitoring interval.
+    
+    In addition to that, a new timer was introduced to count seconds at target
+    voltage and improve full charge detection due to timeout.
+
+[33mcommit 5f1d76ef74082561dcf798558214be0db82d0410[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sat Feb 8 11:08:58 2020 +0100
+
+    Dedicated setup.cpp to clean up main.cpp
+    
+    Also includes update of timestamp calculation in Zephyr.
+
+[33mcommit 7940acccf4c6205c8cdbe265cfd3a0bad28deb68[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Fri Feb 7 17:36:19 2020 +0100
+
+    Zephyr: STM bootloader activation added
+
+[33mcommit 5dda805dab08bfe93207885a4d9fd46d46eeea56[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Fri Feb 7 17:24:07 2020 +0100
+
+    Zephyr: ThingSet reset function added
+
+[33mcommit 43f90eea7c6d6d35e16e1a578926057b5d4995de[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Wed Feb 5 12:37:29 2020 +0100
+
+    Move voltage control parameters to DcBus class
+    
+    The sink and source voltage boundaries for droop control and battery
+    charge voltage management are now part of the DcBus class.
+    Also added source and sink current margins, which will be used by the
+    DC/DC for control targets instead of port current limits, which were
+    difficult to synchronize before.
+
+[33mcommit a7d6dbc3b5f9b031c71988a39a490ef81f481ec7[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Tue Feb 4 12:39:59 2020 +0100
+
+    Let PWM switch class inherit from PowerPort
+    
+    First step of unifying different ports connected to one bus. At a later
+    step, also the load and charger classes should inherit from PowerPort
+    class to make overall charge controller structure more clean.
+
+[33mcommit f0e99cd80f51ac18f886e1d35bc430d047eaff04[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Feb 3 18:02:44 2020 +0100
+
+    Voltage replaced by DcBus ptr in PowerPort class
+    
+    Preparation to separate current and voltage measurements and control
+    parameters into DcBus and PowerPort classes. This will help to
+    manage current from different sources (grid, solar) going towards
+    one bus and control the battery voltage. It will also help to align
+    multiple charge controllers in parallel, communicating via CAN bus.
+
+[33mcommit 86bfce8a0c4791816ca5d8c27ed3ee8eae2c9007[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Wed Feb 5 18:03:22 2020 +0100
+
+    Zephyr: Added solar voltage enable switch
+
+[33mcommit 20fbefc19bb565a9ae898f99789a9163cb6f7cf9[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Wed Feb 5 17:54:23 2020 +0100
+
+    Zephyr: DAC using LL added for STM32L0 and STM32F0
+
+[33mcommit c31f8d5014f3ec2065ceb66eb1803989d87b457d[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Wed Feb 5 17:28:30 2020 +0100
+
+    Fix PlatformIO debug error in ext.cpp
+    
+    Without this dummy implementation of std::__throw_bad_alloc() the
+    linker was throwing errors.
+
+[33mcommit 83d7c36778758bd3e2f16eb7b73166e9b96a4aee[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Wed Feb 5 17:27:07 2020 +0100
+
+    Zephyr: MPPT 1210 HUS 0v7 board added
+
+[33mcommit 3a8103457f8ef278c5ee53c6daa2892f22599f3e[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Fri Jan 31 14:40:11 2020 +0100
+
+    Add type-checking to data objects map
+
+[33mcommit 1b6a7f82d7fb8363a6c701fc0ffde82d6c860695[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Jan 30 16:52:14 2020 +0100
+
+    Zephyr: CAN support added
+    
+    So far, only publishing messages are supported (no RX yet).
+    
+    Logging is switched on again, but with minimal output only (suitable
+    for small F0 MCUs). CAN is activated by default for MPPT 2420 LC.
+
+[33mcommit e078b87553c915b00f924616790462482ef26e46[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Wed Jan 29 11:03:09 2020 +0100
+
+    Zephyr: MPPT 2420 LC board added
+
+[33mcommit 81c0764f2c973d399984fb2755e1c9d38d67e908[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Tue Jan 28 15:28:46 2020 +0100
+
+    Fix DMA memory access violation (wrong length setting)
+
+[33mcommit 8c3a6b7160da7fdd3f477771e0d4c6dd626dfdca[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Tue Jan 28 14:23:47 2020 +0100
+
+    Zephyr: EEPROM for STM32L0 working
+
+[33mcommit eed8c9114cef19e0b6972018130943dcb0d5eb38[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Tue Jan 28 13:06:56 2020 +0100
+
+    Coding style updated/fixed
+    
+    Indentations of class definitions and preprocessor statements were not
+    uniform throughout the code. This commit cleans up indentations as well
+    as the order of include statements.
+    
+    Style conventions see: https://github.com/LibreSolar/coding-style
+
+[33mcommit c04081fc8afed29d58d559ac7f0b89a7c98216e3[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Tue Jan 28 12:13:54 2020 +0100
+
+    Make Serial and OLED configurable via Kconfig
+
+[33mcommit 05292c12ba0c374259fa2b2e99ed029e52d9af04[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Jan 27 15:04:52 2020 +0100
+
+    ADC & DMA renamed to DAQ (data acquisition)
+
+[33mcommit dc394cc198722c692f8c25506efa20d81b2bf20d[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Jan 27 14:56:38 2020 +0100
+
+    DC/DC: HS MOSFET fail-safe protection enabled
+
+[33mcommit a457c2cc9b2fae031e3f9c03099b8eaafae6d914[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Jan 27 14:41:48 2020 +0100
+
+    Fix DC/DC startup condition check
+
+[33mcommit 24f751b2e52e8a862760110f90a10a6480a96855[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Jan 23 14:17:30 2020 +0100
+
+    Initial support of MPPT 2420 HPX board
+    
+    - Some flags changed to make the firmware compile for new STM32G431 MCU
+    - Zephyr board definition added
+    - Serial, OLED display and LED working
+    - ADC compiling, but not yet working
+
+[33mcommit d5ce578aebb4e8f9718e995bb88cc34bdbc6805a[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Jan 23 09:49:48 2020 +0100
+
+    Zephyr: DMA setup via LL instead of registers
+
+[33mcommit 64bd1930b095c14e69e88ef672dd017f1e7301f9[m
+Author: azeemshatp <azeemsha.tp@scene.community>
+Date:   Wed Jan 22 18:07:33 2020 +0000
+
+    Support continuous integration test in Windows.
+    
+    The 'check.bat' file is introduced to support continuous integration test locally in windows environment. The batch file may be run from Windows command prompt.
+
+[33mcommit f830389c332d7e67312fc72d534c7a32c94b25f3[m
+Author: azeemshatp <azeemsha.tp@scene.community>
+Date:   Wed Jan 22 17:53:18 2020 +0000
+
+    Implemented Thingset Serial functionality in Zephyr framework.
+    
+    Implemented using UART driver APIs.
+
+[33mcommit 41b4607cc7e3b8c65fedbea8a380f27f1a21d4dd[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Jan 20 15:22:21 2020 +0100
+
+    Fix additional bug in load unit-test
+
+[33mcommit 69747a588d53c0ac919a1d02c6a921108a52da0e[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Jan 20 10:41:48 2020 +0100
+
+    Fix initialization bug in load unit-test
+
+[33mcommit 10f7d44bdf5fea5457ae379fcd8e6d81681d297c[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sat Jan 18 16:04:34 2020 +0100
+
+    Zephyr: Load output added
+    
+    Overcurrent protection in PWM charge controller not yet working for Zephyr.
+
+[33mcommit d5ea6b5653779a2776cf55236627391ba79af9b0[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sat Jan 18 15:56:15 2020 +0100
+
+    Zephyr: Custom DTS binding for GPIO switch
+    
+    Previously, the LED binding was abused. DTS is now much cleaner.
+
+[33mcommit 0c01c3d0132f39bade9b82f7244fabc536b8a66e[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Jan 16 20:21:08 2020 +0100
+
+    Fixed wrong initialization of static Wh counters
+
+[33mcommit a76b92c27b16156c674c073d9458ecf6e9e5d145[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Jan 16 20:02:53 2020 +0100
+
+    time(NULL) replaced with uptime() in helper files
+    
+    Reason: Zephyr does not support time(NULL). This way it is portable.
+
+[33mcommit 632eb5a4f74926c89a720bcd2e1d94ed1a389a45[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Jan 16 16:12:10 2020 +0100
+
+    Zephyr: ADC HAL replaced with LL
+
+[33mcommit 27bb53bbebd077e76e09f5e703895a006cd2528b[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Wed Jan 15 21:34:19 2020 +0100
+
+    Zephyr: ADC based on STM HAL working
+
+[33mcommit cb988639cecae1ef2490c0a39fe16e534da4e57a[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Jan 9 13:56:02 2020 +0100
+
+    Zephyr: Added PWM 2420 LUS board
+
+[33mcommit 04f0d429705bb155ae3994bb52e78955f7bd43dd[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Tue Jan 7 09:38:10 2020 +0100
+
+    Zephyr board names unified with mbed code
+
+[33mcommit 90f4c9af001f157617795b8198e765744283cb10[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Tue Jan 7 07:40:46 2020 +0100
+
+    ThingSet and OLED libs added as git submodules
+
+[33mcommit e1915ab50180ad8cfcabe7fa67ba86322dbbba28[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Jan 6 19:27:13 2020 +0100
+
+    Releases mentioned in README.md
+
+[33mcommit 16ca793bb3b2d1a28c87730a2beb5a0324a99947[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Jan 6 19:16:44 2020 +0100
+
+    Port configuration based on Kconfig implemented
+
+[33mcommit 7bd9bdeafd2286c4aa0beb7eefdbe7d364b77776[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sat Jan 4 14:02:48 2020 +0100
+
+    Kconfig: User-configuration added
+
+[33mcommit d654324860a58fb6150bd5e8a8c507942ee1c7e3[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Tue Dec 31 13:19:26 2019 +0100
+
+    Charger-specific features added to Zephyr board spec
+    
+    Hardware features like PWM switch, DC/DC converter and LED config
+    are now configured in the board definition. Actual source files still
+    need to be changed to use defines with CONFIG_ prefix instead of
+    defines from pcb.h.
+
+[33mcommit 7f4aaf97c3ab5970324c146faccad53e7b081677[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Tue Dec 31 13:16:14 2019 +0100
+
+    Moved cal register definitions to mcu.h
+
+[33mcommit 93418fc8c8bb720489fe17186e1f16e2a0183c77[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Fri Dec 20 14:27:38 2019 +0100
+
+    Fixed basic nanogrid port implementation
+    
+    Instead of SOLAR_TERMINAL, GRID_TERMINAL has to be defined in config.h
+    (see also template).
+
+[33mcommit 53ae6d46082aabc58b27bbe333daa3240abf7920[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Fri Dec 20 11:37:05 2019 +0100
+
+    File headers shortened using SPDX-License-Identifier
+
+[33mcommit 7f72d17164c67256d05934619afadc59e49a9f3f[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Fri Dec 20 11:02:44 2019 +0100
+
+    Readme: Added instructions for Zephyr
+
+[33mcommit dc270372afaf17395502dc6bed7bed8417f6a14e[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Tue Nov 26 12:12:09 2019 +0100
+
+    OLED display integrated with Zephyr
+    
+    - Some fixes in DTS and pinmux settings
+    - Supporting different I2C address definitions of mbed and zephyr
+    - Thread for ext_mgr added
+
+[33mcommit 117455390bf1bf133ad5939627eaccc86aafaef8[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sun Nov 24 20:40:53 2019 +0100
+
+    OLED library refactoring to prepare Zephyr integration
+    
+    - Made Adafruit GFX library independent of mbed Stream class
+    - Major cleanup/rewrite of SSD1306 specific class
+    - Dynamically allocated std::vector display buffer replaced with statically
+      allocated std::array (leads to more calculated RAM usage only because
+      previous heap usage is not considered in memory summary)
+    - Commands for brightness control and to prevent shifted display now
+      integrated in SSD1306 class
+
+[33mcommit 8c3c08df264615640fa3b5228f4666d50e8b3c24[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sun Nov 24 14:07:11 2019 +0100
+
+    Removed broken mbed USB CDC libraries
+
+[33mcommit 3f89943edf4d9b8fc880b624a5fa037e66655869[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sun Nov 24 13:52:14 2019 +0100
+
+    ThingSet interfaces merged with Ext interfaces
+
+[33mcommit 4326d74fe2175cd4c3c105649ffec0c5bacbae33[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sun Nov 24 13:14:27 2019 +0100
+
+    UExt interfaces simplified and renamed to Ext
+
+[33mcommit 7633dc1d930ee241beb469dc31468574e53ea41a[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sun Nov 24 10:39:11 2019 +0100
+
+    Zephyr: Clock setup fixed and LEDs implemented
+
+[33mcommit 62f2f1978c6d1c539284a27008c5d6a916296091[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sat Nov 23 10:58:43 2019 +0100
+
+    UEXT and ThingSet code moved to ext folder
+
+[33mcommit 88148e70cbc5b43db4ea982e0d717106447adb67[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Nov 21 18:37:48 2019 +0100
+
+    Initial compiling Zephyr integration
+
+[33mcommit b87d223dff16d56ed724951a34e400a50947a4da[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Nov 21 08:34:35 2019 +0100
+
+    Conformance testing script check.sh added
+
+[33mcommit 67c5bc5504930f21cb622bd0f76a89edbf14486d[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Nov 21 07:45:16 2019 +0100
+
+    Check for trailing whitespaces added to TravisCI
+    
+    Rationale: Many editors (inclding mine) are set to automatically remove
+    trailing whitespaces. Updating files with trailing spaces creates distracting
+    additional lines in diffs.
+
+[33mcommit 74b765e8015d38fa068283b977bc42182aa4128a[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Nov 21 07:44:15 2019 +0100
+
+    Trailing white spaces removed
+
+[33mcommit 7952ac99b0bf8d86079a883bf137893e21a373b4[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Thu Nov 21 07:38:32 2019 +0100
+
+    Subfolder img with OLED bitmap raw files removed
+
+[33mcommit 0086a739ad06ce830d89401e93f3e08896e521b9[m
+Author: Martin Jäger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Nov 11 21:43:49 2019 +0100
+
+    Create CONTRIBUTING.md
+
+[33mcommit a209761fd97aaa3624b5b3a0d83478dc0d0983b9[m
+Author: Martin Jäger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Nov 11 21:02:26 2019 +0100
+
+    Create CODE_OF_CONDUCT.md
+
+[33mcommit ad27142cd89eee02e57624e5e6ad3aaf85659c6c[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Nov 11 19:33:30 2019 +0100
+
+    Fix DC/DC and PWM switch current limit control (#79)
+
+[33mcommit ad99d0a3615f6ad06657655f6d4e2699f77c9196[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Nov 11 18:18:30 2019 +0100
+
+    Static code analysis activated in PlatformIO
+
+[33mcommit 47954166be6dfe91743d47c30f12dfbe3a80255f[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Mon Nov 11 11:38:34 2019 +0100
+
+    Fine-tuning of battery/load UV/OV alerts
+    
+    - Alerts now set to +-20% of actual measured voltage
+    - Hysteresis for load overvoltage reconnect setpoint made configurable
+    - Added check for PWM switch MOSFET driver undervoltage
+
+[33mcommit f254c77ab6793b393439f74d2e2ea31045fc450b[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Sat Nov 9 16:22:54 2019 +0100
+
+    Refactoring of load control and state machine
+    
+    - State machine and control merged to one function
+    - Load states marked as deprecated, global error flags used instead
+    - Reduced duplicated code and made load control function easier to read
+
+[33mcommit d1ff837c5e8bfa77e9124709a2b904a9c0e9983f[m
+Author: hogthrob <hogthrob@users.noreply.github.com>
+Date:   Sun Nov 10 17:55:43 2019 +0100
+
+    Overvoltage limit overflow fix (#80)
+    
+    The bat config calculation did calculate the absolute max voltage
+    too high, it was doing an unnecessary multiplication.
+    This triggered an issue in the voltage limit set code, which did not
+    handle the overflow of the 16bit limit value properly.
+    
+    Both are fixed now. We limit the limit value to what the ADC is able
+    to deliver, so that we detect overvoltage for sure, even if the setting
+    is out of ADC range.
+
+[33mcommit 1536e176a9e0e0d1869cfa37c755f363bb807f3b[m
+Author: hogthrob <hogthrob@users.noreply.github.com>
+Date:   Sun Nov 10 15:13:30 2019 +0100
+
+    Better limit for input power derating (#78)
+    
+    We should use src_voltage_stop as limit,
+    since the input voltage start limit is basically an OC voltage
+    where as the stop voltage is a voltage to be measured under load.
+
+[33mcommit ba7d379225c2064b5b7a17177205bdbee5a6b26b[m
+Author: hogthrob <hogthrob@users.noreply.github.com>
+Date:   Sat Nov 9 23:13:00 2019 +0100
+
+    Refactored adc_dma.cpp for readability (#76)
+    
+    - replaced the lengthy adc value formulas with respective functions
+      to ease reading
+    - removed unecessary casts for alert callbacks
+    - added static to the internal global variables in order to hide them from the
+      other compilation units
+
+[33mcommit 5cc4921cd2a80029e7162da49d8f551c11fd5b82[m
+Author: hogthrob <hogthrob@users.noreply.github.com>
+Date:   Sat Nov 9 12:35:45 2019 +0100
+
+    Small issue fix for OLED (#77)
+
+[33mcommit a600bf8a09e6a2a1007eed2f6b1a9b8d5226569e[m
+Author: hogthrob <hogthrob@users.noreply.github.com>
+Date:   Sat Nov 9 08:22:28 2019 +0100
+
+    OLED display brightness adjust, reset improvement, SOC display and more (#75)
+    
+    - OLED brightness can be set to extend life
+    - OLED display correctly initialized at MCU restart even without power off
+      Sometimes the OLED display displays all content shifted if the MCU is
+      reset without cutting the power to the display (i.e. without display reset).
+    - SOC is display in battery symbol showing 0 to 5 bars
+    - Internal temperature is displayed if no external sensor is detected (t)
+    - PWM value displays as "OFF" if the PWM/halfbridge is not active
+
+[33mcommit c26c17221a4d2f3edbf959b0b1b8bd8e4337dc70[m
+Author: Martin Jaeger <17674105+martinjaeger@users.noreply.github.com>
+Date:   Fri Nov 8 13:06:17 2019 +0100
+
+    Overvoltage alert improved for PWM switching
+    
+    Previously, the alert was sometimes erroneously triggered in PWM charger
+    absorption phase (constant voltage, PWM switching). Now the overvoltage
+    alert is inhibited during turn-on in each PWM cycle by an interrupt.
