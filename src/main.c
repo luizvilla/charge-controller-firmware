@@ -5,8 +5,7 @@
  */
 
 /**
- * @brief       Test for OwnTech's hrtim driver integration in
- *              half_bridge.cpp
+ * @brief       Test for owntech's leg module integration in zephyr
  *
  * @author      Hugues Larrive <hugues.larrive@laas.fr>
  */
@@ -17,42 +16,54 @@
 #include <devicetree.h>
 #include <drivers/gpio.h>
 
-#include "half_bridge.h"        // PWM generation for DC/DC converter
+#include "leg.h"        // PWM management layer by inverter leg interface definitions
 
 
 void main(void)
 {
 	printf("\
-Libre Solar Charge Controller: %s\
-\n", CONFIG_BOARD);
+CONFIG_BOARD: %s\\n", CONFIG_BOARD);
 
     puts("\n\
  _______________________________________________________________\n\
 |                                                               |\n\
-|           Test for OwnTech's high resolution timer            |\n\
-|             driver integration in half_bridge.cpp             |\n\
+|      Test for owntech's leg module integration in zephyr      |\n\
 |_______________________________________________________________|\n\
+\n\
+\n\
+See src/leg_conf.h for legs configuration\n\
+TODO: fix leg_conf_t data structure for hrtim\n\
 \n");
 
-    puts("\
-//  void half_bridge_init(  print freq_kHz, int deadtime_ns,\n\
-//                          float min_duty, float max_duty  );\n\
-    half_bridge_init(200, 100, 0.1, 0.9);\n");
-    half_bridge_init(200, 100, 0.1, 0.9);
+
 
     puts("\
-//  void half_bridge_set_duty_cycle(float duty);\n\
-    half_bridge_set_duty_cycle(0.5);\n");
-    half_bridge_set_duty_cycle(0.5);
+//  void leg_init(void);\n\
+    leg_init();\n");
+    leg_init();
 
     puts("\
-//  void half_bridge_start();\n\
-    half_bridge_start();\n");
-    half_bridge_start();
+//  void leg_set(uint8_t leg_dev, float duty_cycle,\n\
+//                  float phase_shift);\n\
+//  leg_set(1, 0.5, 0);\n\
+//  leg_set(2, 0.5, 0.5);\n");
+    leg_set(1, 0.5, 0);
+    leg_set(2, 0.5, 0.5);
+
+    puts("\tk_msleep(10000); // sleep for 10 seconds\n");
+    k_msleep(10000);
 
     puts("\
-// You must observe a complementary pwm signal of 200 KHz with a \n\
-// duty cycle of 55% on PA8 and PB13\n");
+//  void leg_stop(uint8_t leg_dev);\n\
+//  leg_stop(2);\n");
+    leg_stop(2);
 
-    puts("*** the end ***\n");
+    puts("\tk_msleep(10000); // sleep for 10 seconds\n");
+    k_msleep(10000);
+
+    puts("\
+//  leg_set(2, 0.5, 0.5);\n");
+    leg_set(2, 0.5, 0.5);
+
+    //~ puts("*** the end ***\n");
 }

@@ -10,10 +10,11 @@ target_sources(app PRIVATE
         #~ device_status.cpp
         #~ dcdc.cpp
         #~ eeprom.cpp
-        half_bridge.cpp
+        #~ half_bridge.cpp
         hrtim.c
         #~ hardware.cpp
         #~ leds.cpp
+        leg.c
         #~ load.cpp
         #~ load_driver.c
         main.c
